@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,10 +12,11 @@
   <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
 
-<script src="fb_setup.js"></script>
+  <script src="fb_setup.js"></script>
   <script src="fb_io.js"></script>
 
 </head>
+
 <body>
   <div class="container">
     <h1>Sal’s Strawberry Saloon</h1>
@@ -23,11 +25,69 @@
     <button onclick="fb_authenticate()">Login with Google</button>
 
     <form id="fruitForm">
-      <label for="name">Your Name:</label>
-      <input type="text" id="name" name="name" required />
+      <label for="username">Your Username:</label>
+      <input type="text" id="username" name="username" required />
+
+      <!--- 
+     <label for="favoriteFruit">Favorite Fruit:</label>
+      <input type="text" id="favoriteFruit" name="favoriteFruit" required />
+      -->
 
       <label for="favoriteFruit">Favorite Fruit:</label>
-      <input type="text" id="favoriteFruit" name="favoriteFruit" required />
+      <select id="favoriteFruit" name="favoriteFruit" required>
+        <option value="" selected disabled>choose a fruit</option>
+        <option value="apple">apple</option>
+        <option value="apricot">apricot</option>
+        <option value="avocado">avocado</option>
+        <option value="banana">banana</option>
+        <option value="blackberry">blackberry</option>
+        <option value="blueberry">blueberry</option>
+        <option value="cantaloupe">cantaloupe</option>
+        <option value="cherry">cherry</option>
+        <option value="clementine">clementine</option>
+        <option value="coconut">coconut</option>
+        <option value="cranberry">cranberry</option>
+        <option value="cucumber">cucumber</option>
+        <option value="date">date</option>
+        <option value="dragonFruit">dragon fruit</option>
+        <option value="elderberry">elderberry</option>
+        <option value="fig">fig</option>
+        <option value="gooseberry">gooseberry</option>
+        <option value="grape">grape</option>
+        <option value="grapefruit">grapefruit</option>
+        <option value="guava">guava</option>
+        <option value="honeydewMelon">honeydew melon</option>
+        <option value="jackfruit">jackfruit</option>
+        <option value="kiwifruit">kiwifruit</option>
+        <option value="kumquat">kumquat</option>
+        <option value="lemon">lemon</option>
+        <option value="lime">lime</option>
+        <option value="lychee">lychee</option>
+        <option value="mandarin">mandarin</option>
+        <option value="mango">mango</option>
+        <option value="nectarine">nectarine</option>
+        <option value="olive">olive</option>
+        <option value="orange">orange</option>
+        <option value="papaya">papaya</option>
+        <option value="passionfruit">passionfruit</option>
+        <option value="peach">peach</option>
+        <option value="pear">pear</option>
+        <option value="persimmon">persimmon</option>
+        <option value="pineapple">pineapple</option>
+        <option value="plantain">plantain</option>
+        <option value="plum">plum</option>
+        <option value="pomegranate">pomegranate</option>
+        <option value="pomelo">pomelo</option>
+        <option value="prune">prune</option>
+        <option value="raspberry">raspberry</option>
+        <option value="rhubarb">rhubarb</option>
+        <option value="starFruit">star fruit</option>
+        <option value="strawberry">strawberry</option>
+        <option value="tangerine">tangerine</option>
+        <option value="tomato">tomato</option>
+        <option value="watermelon">watermelon</option>
+                <option value="other">something else</option>
+      </select>
 
       <label for="fruitQuantity">How many servings per week?</label>
       <input type="number" id="fruitQuantity" name="fruitQuantity" required />
@@ -35,11 +95,11 @@
       <!-- add more fields here -->
     </form>
 
-    <button onclick="fb_write()">Submit</button>
+    <button onclick="getForm()">Submit</button>
 
     <p id="statusMessage"></p>
   </div>
 </body>
-  <script src="/script.js"></script>
+<script src="/script.js"></script>
 
 </html>

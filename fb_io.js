@@ -15,10 +15,21 @@ function fb_error(){
 }
 
 
-function isNull(data) {
+function firebaseIsNull(data) {
   console.log("");
-  console.log("running func: isNull");
+  console.log("running func: firebaseIsNull");
   if (data.val() == null) {
+    console.log("is Null")
+    return (true);
+  } else {
+    return (false);
+  }
+}
+
+function fieldIsNull(data) {
+  console.log("");
+  console.log("running func: fieldIsNull");
+  if ((data == null)||(data.trim()=="")) {
     console.log("is Null")
     return (true);
   } else {

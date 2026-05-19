@@ -1,8 +1,28 @@
 
-console.log("Running Sal's Strawberries")
+console.log("Running Sal's Strawberries");
 
-function writeForm(){
+function getForm(){
+    console.log('');
+    console.log('getting form');
     // Get the form data
+            const username = document.getElementById("username").value;
     const favoriteFruit = document.getElementById("favoriteFruit").value;
+    const fruitQuantity = document.getElementById("fruitQuantity").value;
+
+    if(fieldIsNull(username)||fieldIsNull(favoriteFruit)||fieldIsNull(fruitQuantity)) {
+        alert('please fill out all fields');
+    }
+
+  firebase.database().ref('/miniProject/users/' + username).set({
+    
+        'username': username,
+        "favoriteFruit": favoriteFruit,
+        'fruitQuantity': fruitQuantity
+    
+});
+
+
+
+
+    console.log(username+favoriteFruit+fruitQuantity)
 }
-writeForm();
