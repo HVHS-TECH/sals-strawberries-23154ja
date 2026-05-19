@@ -14,11 +14,12 @@ function getForm(){
         return;
     }
 
-  firebase.database().ref('/miniProject/users/' + username).set({
+  firebase.database().ref('/miniProject/users/' + GLOBAL_user.uid).set({
     
         'username': username,
         "favoriteFruit": favoriteFruit,
-        'fruitQuantity': fruitQuantity
+        'fruitQuantity': fruitQuantity,
+        "emailAddress": GLOBAL_user.email
     
 });
 

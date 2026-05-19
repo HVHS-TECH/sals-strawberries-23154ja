@@ -6,9 +6,34 @@
  **                                                          **
  **************************************************************
  **************************************************************/
-function fb_authenticate(){
-    // authenticate with Google
+var GLOBAL_user;
+
+ function googleLoginRequest(){
+firebase.auth().onAuthStateChanged(googleLoginMiddleMan);
 }
+
+
+function googleLoginMiddleMan(_user) {
+  console.log(_user)
+if (_user) {
+  console.log("user is logged in already");
+  GLOBAL_user=_user;
+} else {
+  console.log("user is not logged in, starting popup")
+  googleLoginPopup();
+}
+}
+
+
+function googleLoginPopup(){
+  var provider = new firebase.auth.GoogleAuthProvider();
+
+firebase.auth().signInWithPopup(provider).then((result) => {
+GLOBAL_user = result.user;
+console.log('user has logged in');
+});
+}
+
 
 function fb_error(){
     // Don't forget your error handling!
