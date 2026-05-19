@@ -11,6 +11,7 @@ function getForm(){
 
     if(fieldIsNull(username)||fieldIsNull(favoriteFruit)||fieldIsNull(fruitQuantity)) {
         alert('please fill out all fields');
+        return;
     }
 
   firebase.database().ref('/miniProject/users/' + username).set({
