@@ -7,36 +7,42 @@
  **************************************************************
  **************************************************************/
 var GLOBAL_user;
+var authListener;
 
- function googleLoginRequest(){
-firebase.auth().onAuthStateChanged(googleLoginMiddleMan);
+function googleLoginRequest() {
+  authListener = firebase.auth().onAuthStateChanged(googleLoginMiddleMan);
 }
 
+function googleLogoutRequest() {
+  authListener();
+  firebase.auth().signOut();
+  console.log('user has logged out');
+}
 
 function googleLoginMiddleMan(_user) {
   console.log(_user)
-if (_user) {
-  console.log("user is logged in already");
-  GLOBAL_user=_user;
-} else {
-  console.log("user is not logged in, starting popup")
-  googleLoginPopup();
-}
+  if (_user) {
+    console.log("user is logged in already");
+    GLOBAL_user = _user;
+  } else {
+    console.log("user is not logged in, starting popup")
+    googleLoginPopup();
+  }
 }
 
 
-function googleLoginPopup(){
+function googleLoginPopup() {
   var provider = new firebase.auth.GoogleAuthProvider();
 
-firebase.auth().signInWithPopup(provider).then((result) => {
-GLOBAL_user = result.user;
-console.log('user has logged in');
-});
+  firebase.auth().signInWithPopup(provider).then((result) => {
+    GLOBAL_user = result.user;
+    console.log('user has logged in');
+  });
 }
 
 
-function fb_error(){
-    // Don't forget your error handling!
+function fb_error() {
+  // Don't forget your error handling!
 }
 
 
@@ -54,7 +60,7 @@ function firebaseIsNull(data) {
 function fieldIsNull(data) {
   console.log("");
   console.log("running func: fieldIsNull");
-  if ((data == null)||(data.trim()=="")) {
+  if ((data == null) || (data.trim() == "")) {
     console.log("is Null")
     return (true);
   } else {
