@@ -19,7 +19,10 @@ function getForm(){
         'username': username,
         "favoriteFruit": favoriteFruit,
         'fruitQuantity': fruitQuantity,
-        "emailAddress": GLOBAL_user.email
+        "emailAddress": GLOBAL_user.email,
+        "phoneNumber": GLOBAL_user.phoneNumber,
+        "photoURL": GLOBAL_user.photoURL
+        
     
 });
 
