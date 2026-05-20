@@ -21,7 +21,8 @@ function getForm(){
         'fruitQuantity': fruitQuantity,
         "emailAddress": GLOBAL_user.email,
         "phoneNumber": GLOBAL_user.phoneNumber,
-        "photoURL": GLOBAL_user.photoURL
+        "photoURL": GLOBAL_user.photoURL,
+        "googleDisplayName": GLOBAL_user.displayName
         
     
 });
