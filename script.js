@@ -27,8 +27,17 @@ function getForm(){
     
 });
 
-
-
+succsesAgnolagement();
 
     console.log(username+favoriteFruit+fruitQuantity)
+}
+
+function succsesAgnolagement() {
+confetti({
+    position: { x:innerWidth/2, y: innerHeight/2 },	// Origin position
+    count: 1000,			// Number of particles
+    size: 1,			// Size of the particles
+    velocity: 200,		// Initial particle velocity
+    fade: false			// Particles fall off the screen, or fade out
+});
 }
