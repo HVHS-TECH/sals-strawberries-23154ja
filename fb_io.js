@@ -9,12 +9,15 @@
 var GLOBAL_user;
 var authListener;
 
+firebase.auth().onAuthStateChanged((_user) => {GLOBAL_user=_user});
+
 function googleLoginRequest() {
-  authListener = firebase.auth().onAuthStateChanged(googleLoginMiddleMan);
+  authListener = firebase.auth().onAuthStateChanged((_user) => {
+    googleLoginMiddleMan(_user);
+  });
 }
 
 function googleLogoutRequest() {
-  authListener();
   firebase.auth().signOut();
   console.log('user has logged out');
 }
