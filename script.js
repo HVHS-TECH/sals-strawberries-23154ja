@@ -18,7 +18,7 @@ alert('log in with google');
 return;
     }
 
-        firebase.database().ref('/miniProject/users/' + GLOBAL_user.uid).set({
+        firebase.database().ref('/miniProject/users/' + GLOBAL_user.uid).update({
 
             'username': username,
             "favoriteFruit": favoriteFruit,

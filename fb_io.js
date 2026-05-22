@@ -7,13 +7,25 @@
  **************************************************************
  **************************************************************/
 var GLOBAL_user;
-var authListener;
 
-firebase.auth().onAuthStateChanged((_user) => {GLOBAL_user=_user});
+
+firebase.auth().onAuthStateChanged((_user) => {GLOBAL_user=_user
+if(_user){
+      document.getElementById("buttonBox").innerHTML = "<button onclick='googleLogoutRequest()'>Logout with Google</button>"
+      firebase.database().ref('/miniProject/users/' + GLOBAL_user.uid).update({
+     "emailAddress": GLOBAL_user.email,
+        "phoneNumber": GLOBAL_user.phoneNumber,
+        "photoURL": GLOBAL_user.photoURL,
+        "googleDisplayName": GLOBAL_user.displayName
+        });
+} else {
+      document.getElementById("buttonBox").innerHTML = '<button onclick="googleLoginRequest()">Login with Google</button>'
+}
+});
 
 function googleLoginRequest() {
   let pressed = true;
-  authListener = firebase.auth().onAuthStateChanged((_user) => {
+firebase.auth().onAuthStateChanged((_user) => {
     if (pressed) {
     googleLoginMiddleMan(_user);
     }
@@ -27,16 +39,8 @@ function googleLogoutRequest() {
 }
 
 function googleLoginMiddleMan(_user) {
-  console.log(_user)
   if (_user) {
-    console.log("user is logged in already");
-    GLOBAL_user = _user;
-      firebase.database().ref('/miniProject/users/' + GLOBAL_user.uid).set({
-     "emailAddress": GLOBAL_user.email,
-        "phoneNumber": GLOBAL_user.phoneNumber,
-        "photoURL": GLOBAL_user.photoURL,
-        "googleDisplayName": GLOBAL_user.displayName
-        });
+    console.log("user is logged in already"); 
   } else {
     console.log("user is not logged in, starting popup")
     googleLoginPopup();
@@ -48,8 +52,9 @@ function googleLoginPopup() {
   var provider = new firebase.auth.GoogleAuthProvider();
 
   firebase.auth().signInWithPopup(provider).then((result) => {
-    GLOBAL_user = result.user;
+    
     console.log('user has logged in');
+
   });
 }
 
