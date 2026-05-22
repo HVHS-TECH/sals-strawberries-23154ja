@@ -18,8 +18,13 @@ function triggerGoogleUpdateStatus() {
 
       firebase.database().ref('/miniProject/users/' + GLOBAL_user.uid).once('value', (snapshot) => {
         let data = snapshot.val();
-        if (data.username && fieldIsNull(document.getElementById("username").value)) {
+        if (fieldIsNull(document.getElementById("username").value)) {
+          if (data.username) {
           document.getElementById("username").value = data.username;
+          } else if (data.googleDisplayName) {
+                      document.getElementById("username").value = data.googleDisplayName;
+
+          }
         }
         if (data.favoriteFruit && fieldIsNull(document.getElementById("favoriteFruit").value)) {
           document.getElementById("favoriteFruit").value = data.favoriteFruit;
