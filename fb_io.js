@@ -12,8 +12,12 @@ var authListener;
 firebase.auth().onAuthStateChanged((_user) => {GLOBAL_user=_user});
 
 function googleLoginRequest() {
+  let pressed = true;
   authListener = firebase.auth().onAuthStateChanged((_user) => {
+    if (pressed) {
     googleLoginMiddleMan(_user);
+    }
+    pressed=false;
   });
 }
 
@@ -27,6 +31,12 @@ function googleLoginMiddleMan(_user) {
   if (_user) {
     console.log("user is logged in already");
     GLOBAL_user = _user;
+      firebase.database().ref('/miniProject/users/' + GLOBAL_user.uid).set({
+     "emailAddress": GLOBAL_user.email,
+        "phoneNumber": GLOBAL_user.phoneNumber,
+        "photoURL": GLOBAL_user.photoURL,
+        "googleDisplayName": GLOBAL_user.displayName
+        });
   } else {
     console.log("user is not logged in, starting popup")
     googleLoginPopup();
