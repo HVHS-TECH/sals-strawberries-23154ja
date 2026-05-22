@@ -3,6 +3,8 @@
 
 //maybe change hello google name to hello or welcome please fill out form if no username stored and welcome back username if username found (maybe if no username say hello google name and swap when username found)
 
+//change username to name
+
 
 console.log("Running Sal's Strawberries");
 
