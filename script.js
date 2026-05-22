@@ -1,3 +1,8 @@
+//seperate google data from user data
+//add option to use seperate link for photo
+
+//maybe change hello google name to hello or welcome please fill out form if no username stored and welcome back username if username found (maybe if no username say hello google name and swap when username found)
+
 
 console.log("Running Sal's Strawberries");
 
@@ -26,6 +31,7 @@ return;
 
         });
 
+triggerGoogleUpdateStatus();
     succsesAgnolagement();
 
     console.log(username + favoriteFruit + fruitQuantity)
@@ -33,7 +39,7 @@ return;
 
 function succsesAgnolagement() {
     confetti({
-        position: { x: innerWidth / 2, y: innerHeight / 2 },	// Origin position
+        position: { x: innerWidth / 2, y: innerHeight / 2 },
         count: 1000,
         size: 1,
         velocity: 200,

@@ -8,28 +8,43 @@
  **************************************************************/
 var GLOBAL_user;
 
+triggerGoogleUpdateStatus();
 
-firebase.auth().onAuthStateChanged((_user) => {GLOBAL_user=_user
-if(_user){
-      document.getElementById("buttonBox").innerHTML = "<button onclick='googleLogoutRequest()'>Logout with Google</button>"
-      firebase.database().ref('/miniProject/users/' + GLOBAL_user.uid).update({
-     "emailAddress": GLOBAL_user.email,
-        "phoneNumber": GLOBAL_user.phoneNumber,
-        "photoURL": GLOBAL_user.photoURL,
-        "googleDisplayName": GLOBAL_user.displayName
-        });
-} else {
-      document.getElementById("buttonBox").innerHTML = '<button onclick="googleLoginRequest()">Login with Google</button>'
-}
+function triggerGoogleUpdateStatus() {
+firebase.auth().onAuthStateChanged((_user) => {
+  GLOBAL_user = _user
+  if(_user) {
+ firebase.database().ref('miniProject/users/' + GLOBAL_user.uid+'/username').once('value', updateGoogleStatus, logError)
+  } else {
+    updateGoogleStatus();
+  }
 });
+}
+
+function updateGoogleStatus(nameOfUser){
+   if (GLOBAL_user) {
+    document.getElementById("buttonBox").innerHTML = "<button onclick='googleLogoutRequest()'>Logout</button>"
+    firebase.database().ref('/miniProject/users/' + GLOBAL_user.uid).update({
+      "emailAddress": GLOBAL_user.email,
+      "phoneNumber": GLOBAL_user.phoneNumber,
+      "photoURL": GLOBAL_user.photoURL,
+      "googleDisplayName": GLOBAL_user.displayName
+    });
+    document.getElementById("profileBox").innerHTML = '<image src="' + GLOBAL_user.photoURL + '" id="profilePic"></image><p>Hello '+GLOBAL_user.displayName+'. On this site you will be known as: '+nameOfUser.val()+'</p>';
+  } else {
+    document.getElementById("buttonBox").innerHTML = '<button onclick="googleLoginRequest()">Login with Google</button>'
+    document.getElementById("profileBox").innerHTML ='';
+  }
+}
+
 
 function googleLoginRequest() {
   let pressed = true;
-firebase.auth().onAuthStateChanged((_user) => {
+  firebase.auth().onAuthStateChanged((_user) => {
     if (pressed) {
-    googleLoginMiddleMan(_user);
+      googleLoginMiddleMan(_user);
     }
-    pressed=false;
+    pressed = false;
   });
 }
 
@@ -40,7 +55,7 @@ function googleLogoutRequest() {
 
 function googleLoginMiddleMan(_user) {
   if (_user) {
-    console.log("user is logged in already"); 
+    console.log("user is logged in already");
   } else {
     console.log("user is not logged in, starting popup")
     googleLoginPopup();
@@ -52,7 +67,7 @@ function googleLoginPopup() {
   var provider = new firebase.auth.GoogleAuthProvider();
 
   firebase.auth().signInWithPopup(provider).then((result) => {
-    
+
     console.log('user has logged in');
 
   });
