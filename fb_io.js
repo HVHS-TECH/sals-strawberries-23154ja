@@ -11,18 +11,32 @@ var GLOBAL_user;
 triggerGoogleUpdateStatus();
 
 function triggerGoogleUpdateStatus() {
-firebase.auth().onAuthStateChanged((_user) => {
-  GLOBAL_user = _user
-  if(_user) {
- firebase.database().ref('miniProject/users/' + GLOBAL_user.uid+'/username').once('value', updateGoogleStatus, logError)
-  } else {
-    updateGoogleStatus();
-  }
-});
+  firebase.auth().onAuthStateChanged((_user) => {
+    GLOBAL_user = _user
+    if (_user) {
+      firebase.database().ref('miniProject/users/' + GLOBAL_user.uid + '/username').once('value', updateGoogleStatus, logError)
+
+      firebase.database().ref('/miniProject/users/' + GLOBAL_user.uid).once('value', (snapshot) => {
+        let data = snapshot.val();
+        if (data.username && fieldIsNull(document.getElementById("username").value)) {
+          document.getElementById("username").value = data.username;
+        }
+        if (data.favoriteFruit && fieldIsNull(document.getElementById("favoriteFruit").value)) {
+          document.getElementById("favoriteFruit").value = data.favoriteFruit;
+        }
+        if (data.fruitQuantity && fieldIsNull(document.getElementById("fruitQuantity").value)) {
+          document.getElementById("fruitQuantity").value = data.fruitQuantity;
+        }
+      }, logError);
+
+    } else {
+      updateGoogleStatus();
+    }
+  });
 }
 
-function updateGoogleStatus(nameOfUser){
-   if (GLOBAL_user) {
+function updateGoogleStatus(nameOfUser) {
+  if (GLOBAL_user) {
     document.getElementById("buttonBox").innerHTML = "<button onclick='googleLogoutRequest()'>Logout</button>"
     firebase.database().ref('/miniProject/users/' + GLOBAL_user.uid).update({
       "emailAddress": GLOBAL_user.email,
@@ -30,10 +44,10 @@ function updateGoogleStatus(nameOfUser){
       "photoURL": GLOBAL_user.photoURL,
       "googleDisplayName": GLOBAL_user.displayName
     });
-    document.getElementById("profileBox").innerHTML = '<image src="' + GLOBAL_user.photoURL + '" id="profilePic"></image><p>Hello '+GLOBAL_user.displayName+'. On this site you will be known as: '+nameOfUser.val()+'</p>';
+    document.getElementById("profileBox").innerHTML = '<image src="' + GLOBAL_user.photoURL + '" id="profilePic"></image><p>Hello ' + GLOBAL_user.displayName + '. On this site you will be known as: ' + nameOfUser.val() + '</p>';
   } else {
     document.getElementById("buttonBox").innerHTML = '<button onclick="googleLoginRequest()">Login with Google</button>'
-    document.getElementById("profileBox").innerHTML ='';
+    document.getElementById("profileBox").innerHTML = '';
   }
 }
 
