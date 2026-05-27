@@ -14,10 +14,16 @@ function triggerGoogleUpdateStatus() {
   firebase.auth().onAuthStateChanged((_user) => {
     GLOBAL_user = _user
     if (_user) {
-      firebase.database().ref('miniProject/users/' + GLOBAL_user.uid + '/username').once('value', updateGoogleStatus, logError)
-
-      firebase.database().ref('/miniProject/users/' + GLOBAL_user.uid).once('value', (snapshot) => {
+      a()
+      async function a() {
+      await firebase.database().ref('miniProject/users/' + GLOBAL_user.uid + '/username').once('value', updateGoogleStatus, logError)
+      b()
+      }
+      
+      async function b() {
+       await firebase.database().ref('/miniProject/users/' + GLOBAL_user.uid).once('value', (snapshot) => {
         let data = snapshot.val();
+        console.log("sdfsdghtdhf"+data)
         if (fieldIsNull(document.getElementById("username").value)) {
           if (data.username) {
           document.getElementById("username").value = data.username;
@@ -32,7 +38,7 @@ function triggerGoogleUpdateStatus() {
         if (data.fruitQuantity && fieldIsNull(document.getElementById("fruitQuantity").value)) {
           document.getElementById("fruitQuantity").value = data.fruitQuantity;
         }
-      }, logError);
+      }, logError);}
 
     } else {
       updateGoogleStatus();
